@@ -1,26 +1,15 @@
 """
-
-Introducción
-
-
-En esta entrega vas a crear tu propio juego de **Hundir la flota** en Python. Para el desarrollo del programa necesitarás conocimientos de módulos, bucles, funciones,
-clases y colecciones de Python. **La entrega deberá constar de  varios scripts de Python (archivos .py), nada de jupyter notebooks**.
-
+HUNDIR LA FLOTA YERAY version 1
 
 ¿Cómo funciona el juego?
-
-
-Vamos a realizar una versión que tiene algunas particularidades respecto al juego original, de manera que sea más sencillo el desarrollo. Veamos cómo funciona:
-
 1. Hay dos jugadores: tú y la máquina
 2. Un **tablero de 10 x 10** posiciones donde irán los barcos
-3. Lo primero que se hace es colocar los barcos. Para este juego **los barcos se colocan de manera aleatoria.Ahora bien, puedes empezar colocando los barcos en
+3. Lo primero que se hace es colocar los barcos. Para este juego **los barcos se colocan de manera aleatoria. Ahora bien, puedes empezar colocando los barcos en
 unas posiciones fijas, que no cambien con cada partida, y después implementarlo aleatoriamente, ya que es más complejo. Los barcos son:**
     * 4 barcos de 1 posición de eslora
     * 3 barcos de 2 posiciones de eslora
     * 2 barcos de 3 posiciones de eslora
     * 1 barco de 4 posiciones de eslora
-
 4. Tanto tú, como la máquina tenéis un tablero con barcos, y se trata de ir "disparando" y hundiendo los del adversario hasta que un jugador se queda sin barcos,
 y por tanto, pierde.
 5. Funciona por turnos y empiezas tú.
@@ -28,14 +17,11 @@ y por tanto, pierde.
 7. En los turnos de la máquina, si acerta también le vuelve a tocar. ¿Dónde dispara la maquina? A un punto aleatorio en tu tablero.
 8. Si se hunden todos los barcos de un jugador, el juego acaba y gana el otro.
 
-
 Desarrollo
-
 
 Tendrás que desarrollar lo siguiente:
 1. Necesitarás un conjunto de **constantes**, donde tengas inventariados los barcos del juego, dimensiones y demás variables que no vayan a cambiar que tendréis
 definidas en archivo de **variables.py**
-
 2. Tendrás que construir **una clase Tablero**. Para facilitar el desarrollo, la mejor opción es desarrollar una clase tablero donde implementes las siguientes
 funcionalidades:
     * Cuando se inicialice deberás asignar
@@ -68,12 +54,6 @@ funcionalidades:
     hecho tu en el adversario, de manera que te sirva de ayuda para el siguiente disparo.
     * Todas aquellas funciones que puedas construir para la ejecución de este programa deberán estar definidas en un script que se llame **funciones.py**.
 
-Hay infinidad de maneras para resolver este ejercicio, por lo que siéntete libre de implementarlo de la forma que te resulte más cómoda.
-
-
-Recomendaciones
-
-
 1. **No es necesario tener una clase barco, aunque puede ser recomendable** con los barcos de cada jugador, cuáles están tocados y demás. Simplemente con llevar un
 inventario de las coordenadas con barco es suficiente. Por ejemplo, si el tablero tuviese 2 barcos de 4 posiciones de eslora, es como si tuvieses 8 vidas. Cuando se te
 acaban las vidas, pierdes.
@@ -94,76 +74,152 @@ de manera que se vea bien dónde hay barco, donde ha habido impacto, agua... Ten
 imprimes tu tablero por pantalla. Y otro tablero SIN los barcos, únicamente con los impactos, para ver qué impactos has hecho en el tablero de la maquina.
 6. Si vas a posicionar los barcos de manera aleatoria, tendrás que escoger unas coordenadas aleatoriamente, y una orientación N/S/E/O, de manera que si tu barco
 tiene 3 de eslora y la orientación es N, se posicionará hacia arriba, desde la posición inicial elegida aleatoriamente.
-
 """
 
 
-# Crear un Tablero como una lista de listas de 10x10 que contenga caracteres espacio: " "
-tablero = []                # Se crea el tablero que sera una lista de listas.
+# # Crear un Tablero como una lista de listas de 10x10 que contenga caracteres espacio: " "
+# tablero = []                # Se crea el tablero que sera una lista de listas.
 
-for i in range(10):
-    linea = []              # Se crea una lista nueva antes de usarla.
+# for i in range(10):
+#     linea = []              # Se crea una lista nueva antes de usarla.
     
-    for j in range(10):
-        linea.append(" ")   # Se añade un espacio hasta 10 para rellenar la línea.
-    tablero.append(linea)   # Cuando se completa la línea se añade otra lista en la siguiente línea en el tablero.
+#     for j in range(10):
+#         linea.append(" ")   # Se añade un espacio hasta 10 para rellenar la línea.
+#     tablero.append(linea)   # Cuando se completa la línea se añade otra lista en la siguiente línea en el tablero.
 
 
-# Insertar dos barcos sustituyendo en el Tablero los espacios en blanco por el caracter "B":
-#   Uno de 4 casillas en horizontal: casillas [1][0], [1][1], [1][2], [1][3]
+# # Insertar barcos sustituyendo en el Tablero los espacios en blanco por el caracter "B":
 
-tablero[1][0] = "B"
-tablero[1][1] = "B"
-tablero[1][2] = "B"
-tablero[1][3] = "B"
+# #   Cuatro barcos de 1 posición de eslora
 
-#   Uno de 3 casillas en vertical:   casillas [3][3], [4][3], [5][3]
+# tablero[7][7] = "B"
 
-tablero[3][3] = "B"
-tablero[4][3] = "B"
-tablero[5][3] = "B"
+# tablero[7][9] = "B"
 
-#Escribir una celda de código separada de las anteriores para simular que el usuario está efectuando un disparo: 
+# tablero[5][9] = "B"
 
-def disparar():
-    coordenada1 = int(input("Introduzca las coordenada fila"))
-    while 0 > coordenada1 > 9:
-        print("Coordenada no válida")
-        coordenada1 = int(input("Introduzca las coordenada fila"))
-    coordenada2 = int(input("Introduzca las coordenada columna"))
-    while 0 > coordenada2 > 9:
-        print("Coordenada no válida")
-        coordenada2 = int(input("Introduzca las coordenada columna"))
+# tablero[9][9] = "B"
 
-    if tablero[coordenada1][coordenada2] == " ":
-        print("Agua")
-        tablero[coordenada1][coordenada2] = "o"
-        return False
+# #   Tres barcos de 2 posiciones de eslora
 
-    elif tablero[coordenada1][coordenada2] == "B":
-        print(f"Tocado en posición [{coordenada1}][{coordenada2}] ")
-        tablero[coordenada1][coordenada2] = "x"
-        return True
+# tablero[3][6] = "B"
+# tablero[4][6] = "B"
 
-    else:
-        print("Ya has disparado ahí")
+# tablero[8][6] = "B"
+# tablero[9][6] = "B"
+
+# tablero[6][7] = "B"
+# tablero[6][8] = "B"
+
+# #   Dos barcos de 3 posiciones de eslora
+
+# tablero[3][2] = "B"
+# tablero[4][2] = "B"
+# tablero[5][2] = "B"
+
+# tablero[3][1] = "B"
+# tablero[4][1] = "B"
+# tablero[5][1] = "B"
+
+# #   Un barco de 4 posiciones de eslora
+
+# tablero[1][5] = "B"
+# tablero[2][5] = "B"
+# tablero[3][5] = "B"
+# tablero[4][5] = "B"
+
+# #Escribir una celda de código separada de las anteriores para simular que el usuario está efectuando un disparo: 
+
+# def disparar():
+#     coordenada1 = int(input("Introduzca las coordenada fila"))
+#     while coordenada1 < 0 or coordenada1 > 9:
+#         print("Coordenada no válida")
+#         coordenada1 = int(input("Introduzca las coordenada fila"))
+#     coordenada2 = int(input("Introduzca las coordenada columna"))
+#     while coordenada2 < 0 or coordenada2 > 9:
+#         print("Coordenada no válida")
+#         coordenada2 = int(input("Introduzca las coordenada columna"))
+
+#     if tablero[coordenada1][coordenada2] == " ":
+#         print("Agua")
+#         tablero[coordenada1][coordenada2] = "o"
+#         return False
+
+#     elif tablero[coordenada1][coordenada2] == "B":
+#         print(f"Tocado en posición [{coordenada1}][{coordenada2}] ")
+#         tablero[coordenada1][coordenada2] = "x"
+#         return True
+
+#     else:
+#         print("Ya has disparado ahí")
 
 
-# Para introducir en consola y que el formato se siga viendo en filas y columnas
+# # Para introducir en consola y que el formato se siga viendo en filas y columnas
 
-def imprimirtablero():
-    for fila in tablero:
-        for columna in fila:
-            print(f"[{columna}]", end=" ")
-        print(" ")
+# def imprimirtablero():
+#     for fila in tablero:
+#         for columna in fila:
+#             print(f"[{columna}]", end=" ")
+#         print(" ")
+
+
+# imprimirtablero()
+
+# while True:
+#     resultado = disparar()
+#     imprimirtablero()
+
+#     if resultado == False:
+#         break
 
 
 
-imprimirtablero()
+from clases import Tablero
+
+tablero_usuario = Tablero("Usuario")
+tablero_maquina = Tablero("Máquina")
+
+tablero_usuario.colocar_barcos()
+tablero_maquina.colocar_barcos()
+
+from clases import Tablero
+
+# Creamos los dos tableros
+tablero_usuario = Tablero("Usuario")
+tablero_maquina = Tablero("Máquina")
+
+# Colocamos los barcos en ambos tableros
+tablero_usuario.colocar_barcos()
+tablero_maquina.colocar_barcos()
+
 
 while True:
-    resultado = disparar()
-    imprimirtablero()
 
-    if resultado == False:
-        break
+    # Turno del usuario
+    print("\n--- TU TURNO ---")
+
+    fila = int(input("Fila (0-9): "))
+    columna = int(input("Columna (0-9): "))
+
+    resultado = tablero_maquina.disparar(fila, columna)
+
+    print("\nTus disparos:")
+    tablero_maquina.imprimirtablero(tablero_maquina.disparos)
+
+    # Si fallas, empieza el turno de la máquina
+    if resultado is False:
+
+        print("\n--- TURNO DE LA MÁQUINA ---")
+
+        resultado_maquina = tablero_usuario.disparar_maquina(tablero_usuario)
+
+        # Si la máquina falla, vuelve a empezar el bucle
+        if resultado_maquina is False:
+            print("La máquina ha fallado. Te toca.")
+
+
+print("Tablero real de la máquina:")
+tablero_maquina.imprimirtablero(tablero_maquina.tablero)
+
+print("Disparos registrados:")
+tablero_maquina.imprimirtablero(tablero_maquina.disparos)
